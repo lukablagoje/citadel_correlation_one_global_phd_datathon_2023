@@ -4,12 +4,12 @@ This was a highly selective individual datathon where in the span of 5 days we h
 For more details about the competition, check out this link:
 - [Citadel Datathons](https://www.citadel.com/careers/students/datathons/)
 
-# Research Project Overview
+# Research Overview
 This project extends the research work "Unveiling Clickbait: A Dive into Sentiments, Emotions, and Topics" by Luka Blagojevic, focusing on the analysis of clickbait articles in online media. The research aims to understand the textual properties of clickbait and how they influence user engagement.
 
 The original study employed Natural Language Processing (NLP) techniques to analyze sentiments, emotions, and topics within clickbait articles. My contribution includes further analysis on how these properties affect user engagement on a more granular level, using advanced statistical methods and machine learning algorithms.
 
-# Technical Project Overview
+# Technical Overview
 My technical work on this project is divided into four main parts:
 
 1. **Google Analytics Analysis**: Leveraging Google Analytics, I extracted and analyzed user engagement metrics. This involved studying user behavior patterns, click-through rates, and other relevant metrics to understand how users interact with clickbait content. The notebook [`google_analytics_analysis.ipynb`](https://github.com/lukablagoje/google-analytics-analysis) details this process.
