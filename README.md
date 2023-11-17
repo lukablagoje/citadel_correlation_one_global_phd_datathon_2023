@@ -1,8 +1,9 @@
 # Citadel-Correlation One Global PhD Datathon
-This was a highly selective, individual competition, during which I tackled a confidential problem statement and documented my findings in a detailed [report](https://github.com/lukablagoje/datathon-report.pdf). Note that the main findings are in the report itself and the code is considered only as supplementary material.
+In this highly selective, global PhD student competition, I individually tackled a confidential problem statement and documented my findings in a detailed [report](https://github.com/lukablagoje/datathon-report.pdf). Note that the main findings are in the report itself and the code is considered only as supplementary material.
 
 For more details about the competition, check out this link:
 - [Citadel Datathons](https://www.citadel.com/careers/students/datathons/)
+- [Correlation One Datathons](https://www.correlation-one.com/data-science-talent-competitions)
 # Research Overview
 This research delved into the textual characteristics of clickbait, focusing on how they impact user engagement. Utilizing Natural Language Processing (NLP) techniques, I analyzed sentiments, emotions, and topics present in clickbait articles. My analysis involved a statistical evaluation and ranking of these factors in terms of their effect on user interaction, supplemented by the development of two null models to validate the reliability of this ranking. My methodological approach is encapsulated in the Clickbait Defender product concept:
 
