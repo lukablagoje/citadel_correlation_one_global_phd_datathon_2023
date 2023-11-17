@@ -1,0 +1,157 @@
+# Necessary imports for data processing, model loading, and text cleaning
+import pandas as pd
+import numpy as np
+import os
+import re
+import torch
+from transformers import pipeline, DistilBertTokenizer, DistilBertForSequenceClassification, BertTokenizer, BertForSequenceClassification
+import gc
+import warnings
+import time
+from torch.nn.functional import softmax
+
+# Suppress specific warnings for cleaner output
+warnings.filterwarnings('ignore', category=UserWarning, module='torch.utils.data.dataloader')
+
+# Check and print the available device (CPU or GPU)
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"Using {device} for processing.")
+
+# Define a function to clean text data
+def clean_text(text):
+    if not isinstance(text, str):
+        return ''  # Return an empty string for non-string inputs
+    text = re.sub('<.*?>', '', text)  # Remove HTML tags
+    text = re.sub(r'[^\w\s]', '', text)  # Remove punctuation
+    text = text.strip()  # Remove leading/trailing whitespace
+    return text
+
+# Load and preprocess the dataframe
+df = pd.read_csv('packages.csv')
+df = df.drop(['first_place', 'winner', 'share_image', 'slug', 'image_id'], axis=1)
+df['lede'] = df['lede'].str.replace('</p>', '').str.replace('<p>', '')
+df['test_week'] = pd.to_datetime(df['test_week'], format='%Y-%m-%d')
+df['combined_text'] = df[['headline', 'lede']].apply(lambda x: ' '.join(x.dropna().values.tolist()), axis=1)
+df['cleaned_text'] = df['combined_text'].str.replace('<br>', '').apply(clean_text)
+df['ctr'] = df['clicks'] / df['impressions']
+df = df[['cleaned_text']].copy()
+
+# Load different models for classification and sentiment analysis
+classifier = pipeline('zero-shot-classification', model='facebook/bart-large-mnli', device=0 if device == "cuda" else -1)
+tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased-finetuned-sst-2-english')
+sentiment_model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased-finetuned-sst-2-english')
+emotion_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+emotion_model = BertForSequenceClassification.from_pretrained('nateraw/bert-base-uncased-emotion')
+
+# Define a function to classify text using zero-shot classification
+def classify_batch(texts, labels):
+    # Error handling for empty texts or labels
+    if not texts or not labels:
+        raise ValueError("Texts and labels must not be empty.")
+    results = classifier(texts, candidate_labels=labels, truncation=True)
+    return results
+
+# Define a function for sentiment analysis
+def classify_for_sentiment(text):
+    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512)
+    with torch.no_grad():
+        outputs = sentiment_model(**inputs)
+    probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
+    sentiment = ['NEGATIVE', 'POSITIVE'][probabilities.argmax().item()]
+    score = probabilities.max().item()
+    return {'label': sentiment, 'score': score}
+
+# Define a function for emotion prediction
+def predict_emotion(text, tokenizer, model, max_length=512):
+    input_ids = tokenizer.encode_plus(text, add_special_tokens=True, max_length=max_length, truncation=True, return_attention_mask=False, return_tensors='pt')['input_ids']
+    with torch.no_grad():
+        outputs = model(input_ids)
+        logits = outputs.logits
+    probabilities = softmax(logits, dim=1).numpy().flatten()
+    labels = list(model.config.id2label.values())
+    emotion_probs = list(zip(labels, probabilities))
+    emotion, confidence = max(emotion_probs, key=lambda x: x[1])
+    return emotion, confidence
+
+# Zero-shot classification process
+candidate_labels = ["Society and Social Issues", "Relationships, Gender and Family", "Pop Culture, Media and Entertainment", "Authenticity, Lifestyle and Health"]
+segment_size = 1000
+total_segments = len(df) // segment_size + (1 if len(df) % segment_size != 0 else 0)
+
+for segment in range(total_segments):
+    start = segment * segment_size
+    end = min((segment + 1) * segment_size, len(df))
+    segment_df = df.iloc[start:end].copy()
+
+    for i, row in segment_df.iterrows():
+        text = row['cleaned_text']
+        if pd.isna(text) or text.strip() == '':
+            segment_df.at[i, 'labels'] = np.nan
+            segment_df.at[i, 'scores'] = np.nan
+            continue
+        try:
+            result = classify_batch([text], candidate_labels)
+            segment_df.at[i, 'labels'] = result[0]['labels'][0]
+            segment_df.at[i, 'scores'] = result[0]['scores'][0]
+        except Exception as e:
+            print(f"Error processing index {i}: {e}")
+            segment_df.at[i, 'labels'] = np.nan
+            segment_df.at[i, 'scores'] = np.nan
+        if (i - start) % 100 == 0:
+            print(f"Processed up to index {i}")
+    interim_save_filename = f'packages_topics_segment_{segment}.csv'
+    segment_df.to_csv(interim_save_filename)
+    print(f"Segment {segment} data saved to {interim_save_filename}")
+    gc.collect()
+
+df.to_csv('packages_topics_final.csv')
+
+# Sentiment analysis process
+batch_size = 32
+total_batches = (len(df) + batch_size - 1) // batch_size
+start_time = time.time()
+
+for batch_number, batch_start in enumerate(range(0, len(df), batch_size)):
+    batch_end = batch_start + batch_size
+    batch_texts = df['cleaned_text'][batch_start:batch_end].tolist()
+    batch_results = [classify_for_sentiment(text) for text in batch_texts]
+    for i, result in enumerate(batch_results):
+        df.at[batch_start + i, 'sentiment'] = result['label']
+        df.at[batch_start + i, 'sentiment_score'] = result['score']
+    batch_time = (time.time() - start_time) / (batch_start // batch_size + 1)
+    estimated_time_remaining = batch_time * (total_batches - (batch_start // batch_size + 1))
+    print(f"Batch {batch_start // batch_size + 1}/{total_batches} processed. Estimated time remaining: {estimated_time_remaining/60:.2f} minutes")
+    if batch_number % 100 == 0:
+        interim_save_filename = f'packages_sentiment_batch_{batch_number}.csv'
+        df.to_csv(interim_save_filename)
+        print(f"Interim data saved to {interim_save_filename}")
+
+df.to_csv('packages_sentiment.csv')
+
+# Emotion prediction process
+df['emotion'] = None
+df['confidence'] = None
+
+for index, row in df.iterrows():
+    print(f'Processing index {index} of {len(df)}')
+    if pd.notnull(row['cleaned_text']):
+        emotion, confidence = predict_emotion(row['cleaned_text'], emotion_tokenizer, emotion_model)
+        df.at[index, 'emotion'] = emotion
+        df.at[index, 'confidence'] = confidence
+
+df.to_csv('packages_emotions.csv', index=False)
+
+# Merge data from multiple CSV files in a folder
+folder_path = 'packages_topics_folder'
+dataframes = []
+
+for filename in os.listdir(folder_path):
+    if filename.endswith('.csv'):
+        file_path = os.path.join(folder_path, filename)
+        df = pd.read_csv(file_path)
+        df.fillna(value='default_value', inplace=True)
+        dataframes.append(df)
+
+df_topics = pd.concat(dataframes, ignore_index=True)
+df_topics = df.iloc[:,1:]
+df_topics.to_csv('df_topics.csv')
