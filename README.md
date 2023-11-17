@@ -1,5 +1,5 @@
 # Citadel PhD Datathon Fall 2023
-This was a highly selective individual datathon where in the span of 5 days we had to answer the problem statement (confidential) and present our work in a [report](https://github.com/lukablagoje/datathon-report).
+This was a highly selective individual datathon where in the span of 5 days we had to answer the problem statement (confidential) and present our work in a [report](https://github.com/lukablagoje/datathon-report.pdf).
 
 For more details about the competition, check out this link:
 - [Citadel Datathons](https://www.citadel.com/careers/students/datathons/)
