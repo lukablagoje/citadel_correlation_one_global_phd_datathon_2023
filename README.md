@@ -1,13 +1,10 @@
 # Citadel PhD Datathon Fall 2023
-
+For more details about the competition, check out this link:
+- [Citadel Datathons](https://www.citadel.com/careers/students/datathons/)
 # Research Project Overview
 This project extends the research work "Unveiling Clickbait: A Dive into Sentiments, Emotions, and Topics" by Luka Blagojevic, focusing on the analysis of clickbait articles in online media. The research aims to understand the textual properties of clickbait and how they influence user engagement.
 
 The original study employed Natural Language Processing (NLP) techniques to analyze sentiments, emotions, and topics within clickbait articles. My contribution includes further analysis on how these properties affect user engagement on a more granular level, using advanced statistical methods and machine learning algorithms.
-
-For more details about the competition, check out this link:
-- [Citadel Datathons](https://www.citadel.com/careers/students/datathons/)
-
 # Technical Project Overview
 My technical work on this project on divided into four main parts:
 
