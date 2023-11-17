@@ -1,26 +1,25 @@
-# citadel_phd_datathon_2023
+# Citadel PhD Datathon Fall 2023
 
-## Clickbait Article Analysis using NLP
-This repository contains all the resources and code used for the project "Unveiling Clickbait: A Dive into Sentiments, Emotions, and Topics". This project explores the use of Natural Language Processing (NLP) to analyze clickbait articles, specifically focusing on the influence of sentiments, emotions, and topics in driving user engagement.
+# Research Project Overview
+This project extends the research work "Unveiling Clickbait: A Dive into Sentiments, Emotions, and Topics" by Luka Blagojevic, focusing on the analysis of clickbait articles in online media. The research aims to understand the textual properties of clickbait and how they influence user engagement.
 
-## Repository Structure
-blagojevic_luka_citadel_phd_datathon_2023.pdf - This document contains the detailed report on the research conducted, including findings and methodologies.
-data_cleaning_processing_eda.ipynb - Jupyter notebook detailing the data cleaning, processing, and exploratory data analysis (EDA) steps taken during the research.
-google_analytics_analysis.ipynb - Jupyter notebook focusing on the analysis of Google Analytics data related to the clickbait articles.
-nlp_text_classyfing_algorithms.ipynb - This notebook contains the implementation of NLP text-classifying algorithms used for sentiment, emotion, and topic classification.
-text_analysis_sentiment_emotion_topic.ipynb - Notebook illustrating the detailed text analysis process, focusing on sentiment, emotion, and topic extraction.
-Project Overview
-The primary goal of this project is to understand the key elements that make clickbait articles effective. It involves a deep dive into the sentiments, emotions, and topics presented in these articles and how they influence user engagement. The analysis is based on articles from Upworthy, a well-known clickbait website.
+The original study employed Natural Language Processing (NLP) techniques to analyze sentiments, emotions, and topics within clickbait articles. My contribution includes further analysis on how these properties affect user engagement on a more granular level, using advanced statistical methods and machine learning algorithms.
 
-## Methodology
-Data Cleaning and Processing: Initial steps involved in preparing the data for analysis.
-Google Analytics Analysis: Understanding user behavior and engagement through website traffic data.
-NLP Text Classification: Application of NLP techniques to classify the texts of articles into sentiments, emotions, and topics.
-Text Analysis: Detailed analysis of the textual content of the articles to extract insights.
-Key Findings
-## The project identifies a significant influence of emotional and sentimental elements on user interaction with clickbait content.
-Emotions like anger and sadness, coupled with topics related to society and social issues, tend to engage users more effectively.
-The study also introduces a novel ranking system for analyzing the effectiveness of different sentiment, emotion, and topic combinations in clickbait articles.
-## Limitations and Future Work
-The study has some limitations due to the specific NLP models used and the absence of image data in the analysis.
-Future research could expand to include a wider range of websites and content types, incorporating more advanced NLP techniques.
+For more details about the competition, check out this link:
+- [Citadel Datathons](https://www.citadel.com/careers/students/datathons/))
+
+# Technical Project Overview
+My technical work on this project on divided into four main parts:
+
+1. **Google Analytics** - 
+
+2. **Data Cleaning, Processing and Exploratory Data Analysis**: I refined the dataset used in the original study, focusing on cleaning, categorizing, and preparing the data for deeper analysis. The notebook [`data_cleaning_processing_eda.ipynb`](https://github.com/lukablagoje/data-cleaning-processing-eda) contains the entire process.
+
+3. **NLP Classification**: Here, I developed algorithms for classifying the text of clickbait articles. This part involves sentiment analysis, emotion detection, and topic categorization, as seen in [`nlp_text_classyfing_algorithms.ipynb`](https://github.com/lukablagoje/nlp-text-classyfing-algorithms).
+
+4. **Statistical Rank Analysis, Null Models and Insights**: This section involves applying statistical models to the processed data to glean insights into user engagement. The Jupyter notebook [`google_analytics_analysis.ipynb`](https://github.com/lukablagoje/google-analytics-analysis) outlines this analysis.
+
+# Data
+I cannot provide the processed datasets that we have obtained for the competition, but I provide its source, The Upworthy Research Archive:
+[https://upworthy.natematias.com/](https://upworthy.natematias.com/)
+
