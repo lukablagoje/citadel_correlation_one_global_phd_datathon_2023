@@ -6,7 +6,7 @@ This project extends the research work "Unveiling Clickbait: A Dive into Sentime
 The original study employed Natural Language Processing (NLP) techniques to analyze sentiments, emotions, and topics within clickbait articles. My contribution includes further analysis on how these properties affect user engagement on a more granular level, using advanced statistical methods and machine learning algorithms.
 
 For more details about the competition, check out this link:
-- [Citadel Datathons](https://www.citadel.com/careers/students/datathons/))
+- [Citadel Datathons](https://www.citadel.com/careers/students/datathons/)
 
 # Technical Project Overview
 My technical work on this project on divided into four main parts:
