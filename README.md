@@ -1,5 +1,5 @@
 # Citadel-Correlation One Global PhD Datathon
-This was a highly selective, individual competition, during which I tackled a confidential problem statement and documented my findings in a detailed [report](https://github.com/lukablagoje/datathon-report.pdf).
+This was a highly selective, individual competition, during which I tackled a confidential problem statement and documented my findings in a detailed [report](https://github.com/lukablagoje/datathon-report.pdf). Note that the main findings are in the report itself and the code is considered only supplementary.
 
 For more details about the competition, check out this link:
 - [Citadel Datathons](https://www.citadel.com/careers/students/datathons/)
