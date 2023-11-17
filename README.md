@@ -4,7 +4,7 @@ This was a highly selective, individual competition, during which I tackled a co
 For more details about the competition, check out this link:
 - [Citadel Datathons](https://www.citadel.com/careers/students/datathons/)
 # Research Overview
-This research delved into the textual characteristics of clickbait, focusing on how they impact user engagement. Utilizing Natural Language Processing (NLP) techniques, I analyzed sentiments, emotions, and topics present in clickbait articles. My analysis involved a statistical evaluation and ranking of these factors in terms of their effect on user interaction, supplemented by the development of two null models to validate the reliability of this ranking. The approach is encapsulated in the Clickbait Defender concept:
+This research delved into the textual characteristics of clickbait, focusing on how they impact user engagement. Utilizing Natural Language Processing (NLP) techniques, I analyzed sentiments, emotions, and topics present in clickbait articles. My analysis involved a statistical evaluation and ranking of these factors in terms of their effect on user interaction, supplemented by the development of two null models to validate the reliability of this ranking. The approach is encapsulated in the Clickbait Defender product concept:
 
 ![image](https://github.com/lukablagoje/citadel_phd_datathon_2023/assets/52599010/337c232f-a1b0-4ca9-a812-05702cd8a752)
 
