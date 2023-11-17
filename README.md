@@ -19,7 +19,7 @@ My technical work on this project is divided into four main parts:
 
 3. **NLP Classification**: Here, I developed algorithms for classifying the text of clickbait articles. This part involves sentiment analysis, emotion detection, and topic categorization, as seen in [`nlp_text_classyfing_algorithms.ipynb`](https://github.com/lukablagoje/nlp-text-classyfing-algorithms).
 
-4. **Statistical Rank Analysis, Null Models and Insights**: This section involves applying statistical models to the processed data to glean insights into user engagement. The Jupyter notebook [`text_analysis_sentiment_emotion_topic.ipynb`](https://github.com/lukablagoje/google-analytics-analysis](https://github.com/lukablagoje/citadel_correlation_one_global_phd_datathon_2023/blob/main/text_analysis_sentiment_emotion_topic.ipynb) outlines this analysis.
+4. **Statistical Rank Analysis, Null Models and Insights**: This section involves applying statistical models to the processed data to glean insights into user engagement. The Jupyter notebook [`text_analysis_sentiment_emotion_topic.ipynb`](https://github.com/lukablagoje/citadel_correlation_one_global_phd_datathon_2023/blob/main/text_analysis_sentiment_emotion_topic.ipynb) outlines this analysis.
 
 # Data
 I cannot provide the processed datasets that we have obtained for the competition, but I provide its source, The Upworthy Research Archive:
